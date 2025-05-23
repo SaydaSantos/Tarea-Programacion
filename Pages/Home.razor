@@ -1,0 +1,51 @@
+﻿@page "/"
+@using Tarea_Programacion.Server
+
+<h3>Árbol Binario de Búsqueda</h3>
+
+<input placeholder="Nombre" @bind="nombre" />
+<input type="number" placeholder="Edad" @bind="edad" />
+<button @onclick="Agregar">Agregar</button>
+
+<br />
+
+<input type="number" placeholder="Edad a buscar/eliminar" @bind="claveBusqueda" />
+<button @onclick="Buscar">Buscar</button>
+<button @onclick="Eliminar">Eliminar</button>
+
+<h4>Resultado búsqueda: @resultadoBusqueda</h4>
+
+<h4>Recorrido In-Orden</h4>
+<pre>@arbol.RecorridoInOrden()</pre>
+
+<h4>Recorrido Pre-Orden</h4>
+<pre>@arbol.RecorridoPreOrden()</pre>
+
+<h4>Recorrido Pos-Orden</h4>
+<pre>@arbol.RecorridoPosOrden()</pre>
+
+@code {
+    private ArbolBinarioBusqueda arbol = new();
+    private string nombre;
+    private int edad;
+    private int claveBusqueda;
+    private string resultadoBusqueda;
+
+    private void Agregar()
+    {
+        arbol.Insertar(new Persona { Nombre = nombre, Edad = edad });
+        nombre = "";
+        edad = 0;
+    }
+
+    private void Buscar()
+    {
+        var nodo = arbol.Buscar(claveBusqueda);
+        resultadoBusqueda = nodo != null ? nodo.Info.ToString() : "No encontrado";
+    }
+
+    private void Eliminar()
+    {
+        arbol.Eliminar(claveBusqueda);
+    }
+}
